@@ -181,7 +181,7 @@ export default function SalesCalendar({ onClose, onFocus, zIndex, initialPositio
           </div>
 
           {activeTab === 'daily' ? (
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+            <div className="calendar-details-list">
               <div className="details-header">
                 Entregas para el {selectedDate.getDate()} de {monthNames[selectedDate.getMonth()]}
               </div>
@@ -193,7 +193,7 @@ export default function SalesCalendar({ onClose, onFocus, zIndex, initialPositio
               />
             </div>
           ) : (
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+            <div className="calendar-details-list">
               <div className="details-header" style={{ color: '#ff69b4', borderColor: '#ff69b4' }}>
                 Entregas sin fecha
               </div>
