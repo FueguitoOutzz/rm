@@ -7,7 +7,12 @@ export default function SalesList({ sales, onRemove, onTogglePayment, onUpdateSa
   const [editDateVal, setEditDateVal] = useState('');
 
   // Sort sales by date ascending
-  const sortedSales = [...sales].sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+  const sortedSales = [...sales].sort((a, b) => {
+    if (!a.fecha && !b.fecha) return 0;
+    if (!a.fecha) return 1;
+    if (!b.fecha) return -1;
+    return new Date(a.fecha) - new Date(b.fecha);
+  });
 
   if (sales.length === 0) {
     return <div style={{ textAlign: 'center', padding: '20px' }}>No hay ventas agendadas aún.</div>;
@@ -18,19 +23,17 @@ export default function SalesList({ sales, onRemove, onTogglePayment, onUpdateSa
       {sortedSales.map(sale => {
         let statusClass = 'status-pendiente';
         if (sale.estadoPago === 'Pagado') statusClass = 'status-pagado';
-        
+
         return (
           <div key={sale.id} className="sale-item">
             <div className="sale-item-header">
               {editingDateId === sale.id ? (
-                <input 
-                  type="date" 
-                  value={editDateVal} 
+                <input
+                  type="date"
+                  value={editDateVal}
                   onChange={(e) => {
-                    if (e.target.value) {
-                      onUpdateSale(sale.id, { fecha: e.target.value });
-                      setEditingDateId(null);
-                    }
+                    onUpdateSale(sale.id, { fecha: e.target.value || '' });
+                    setEditingDateId(null);
                   }}
                   onBlur={() => setEditingDateId(null)}
                   style={{
@@ -42,21 +45,21 @@ export default function SalesList({ sales, onRemove, onTogglePayment, onUpdateSa
                   autoFocus
                 />
               ) : (
-                <strong 
-                  onClick={() => { setEditingDateId(sale.id); setEditDateVal(sale.fecha); }}
+                <strong
+                  onClick={() => { setEditingDateId(sale.id); setEditDateVal(sale.fecha || ''); }}
                   style={{ cursor: 'pointer', borderBottom: '1px dashed var(--window-border)' }}
                   title="Click para editar fecha de entrega"
                 >
-                  📅 {new Date(sale.fecha + 'T12:00:00').toLocaleDateString('es-ES')} ✎
+                  {sale.fecha ? new Date(sale.fecha + 'T12:00:00').toLocaleDateString('es-ES') : 'Sin fecha aún'}
                 </strong>
               )}
-              <span className={statusClass} onClick={() => onTogglePayment(sale.id)} style={{cursor: 'pointer'}}>
+              <span className={statusClass} onClick={() => onTogglePayment(sale.id)} style={{ cursor: 'pointer' }}>
                 {sale.estadoPago} {sale.estadoPago === 'Abonado' && sale.cantidadAbono ? `($${sale.cantidadAbono})` : ''}
               </span>
             </div>
             <div><strong>Comprador:</strong> {sale.nombre} {sale.redSocial && `(${sale.redSocial})`}</div>
             <div>
-              <strong>Producto:</strong> {sale.producto} 
+              <strong>Producto:</strong> {sale.producto}
               {sale.precio && ` - $${sale.precio}`}
             </div>
             {sale.fechaCreacion && (
@@ -69,14 +72,14 @@ export default function SalesList({ sales, onRemove, onTogglePayment, onUpdateSa
                 <em>Resta pagar: ${parseInt(sale.precio) - parseInt(sale.cantidadAbono)}</em>
               </div>
             )}
-            
+
             <div style={{ marginTop: '8px', borderTop: '1px dotted var(--window-border)', paddingTop: '5px', fontSize: '0.95em' }}>
               <strong>Detalles:</strong>{' '}
               {editingId === sale.id ? (
                 <div style={{ marginTop: '5px' }}>
-                  <textarea 
-                    value={editVal} 
-                    onChange={(e) => setEditVal(e.target.value)} 
+                  <textarea
+                    value={editVal}
+                    onChange={(e) => setEditVal(e.target.value)}
                     style={{
                       width: '100%',
                       fontFamily: 'var(--font-pixel)',
@@ -94,8 +97,8 @@ export default function SalesList({ sales, onRemove, onTogglePayment, onUpdateSa
                   </div>
                 </div>
               ) : (
-                <span 
-                  onClick={() => { setEditingId(sale.id); setEditVal(sale.descripcion || ''); }} 
+                <span
+                  onClick={() => { setEditingId(sale.id); setEditVal(sale.descripcion || ''); }}
                   style={{ cursor: 'pointer', color: sale.descripcion ? 'inherit' : '#888', fontStyle: sale.descripcion ? 'normal' : 'italic' }}
                 >
                   {sale.descripcion || 'Click aquí para agregar lugar, hora, etc... ✎'}

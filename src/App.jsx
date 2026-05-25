@@ -105,6 +105,9 @@ function App() {
               <div className="background-sticker" style={{ right: '15px', bottom: '15px', transform: 'rotate(-4deg)', width: '150px' }}>
                 <img src="/fri.gif" alt="Friday" style={{ width: '134px', height: '134px' }} />
               </div>
+              <div className="background-sticker" style={{ left: '260px', bottom: '60px', transform: 'rotate(-4deg)', width: '150px' }}>
+                <img src="/won.jpeg" alt="Won" style={{ width: '134px', height: '134px', objectFit: 'cover' }} />
+              </div>
             </div>
 
             <div className="desktop-icons">

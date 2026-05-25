@@ -12,6 +12,7 @@ export default function SalesForm({ onClose, onFocus, zIndex, initialPosition, o
     fecha: '',
     descripcion: ''
   });
+  const [noDate, setNoDate] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,11 +20,14 @@ export default function SalesForm({ onClose, onFocus, zIndex, initialPosition, o
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.nombre || !formData.producto || !formData.fecha) {
+    if (!formData.nombre || !formData.producto || (!noDate && !formData.fecha)) {
       alert('Por favor llena los campos obligatorios (Nombre, Producto, Fecha)');
       return;
     }
-    onAddSale(formData);
+    onAddSale({
+      ...formData,
+      fecha: noDate ? '' : formData.fecha
+    });
     setFormData({
       nombre: '',
       producto: '',
@@ -34,6 +38,7 @@ export default function SalesForm({ onClose, onFocus, zIndex, initialPosition, o
       fecha: '',
       descripcion: ''
     });
+    setNoDate(false);
   };
 
   return (
@@ -64,9 +69,32 @@ export default function SalesForm({ onClose, onFocus, zIndex, initialPosition, o
             <label>Red Social / Contacto:</label>
             <input name="redSocial" value={formData.redSocial} onChange={handleChange} placeholder="@usuario o número" />
           </div>
-          <div className="form-group">
+          <div className="form-group" style={{ flexDirection: 'row', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+            <input 
+              type="checkbox" 
+              id="noDateCheckbox" 
+              checked={noDate} 
+              onChange={(e) => {
+                setNoDate(e.target.checked);
+                if (e.target.checked) {
+                  setFormData(prev => ({ ...prev, fecha: '' }));
+                }
+              }}
+              style={{ width: '16px', height: '16px', cursor: 'pointer' }}
+            />
+            <label htmlFor="noDateCheckbox" style={{ margin: 0, cursor: 'pointer', fontSize: '13px' }}>
+              (no hay fecha aún)
+            </label>
+          </div>
+          <div className="form-group" style={{ opacity: noDate ? 0.6 : 1, pointerEvents: noDate ? 'none' : 'auto' }}>
             <label>Fecha de Entrega:</label>
-            <input type="date" name="fecha" value={formData.fecha} onChange={handleChange} />
+            <input 
+              type="date" 
+              name="fecha" 
+              value={formData.fecha} 
+              onChange={handleChange} 
+              disabled={noDate} 
+            />
           </div>
           <div className="form-group">
             <label>Estado de Pago:</label>

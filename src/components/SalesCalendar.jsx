@@ -5,6 +5,7 @@ import SalesList from './SalesList';
 export default function SalesCalendar({ onClose, onFocus, zIndex, initialPosition, sales, onRemove, onTogglePayment, onUpdateSale, onImportSales }) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [activeTab, setActiveTab] = useState('daily'); // 'daily' or 'nodate'
 
   const getDaysInMonth = (year, month) => {
     return new Date(year, month + 1, 0).getDate();
@@ -35,9 +36,16 @@ export default function SalesCalendar({ onClose, onFocus, zIndex, initialPositio
   // Filter sales for selected date
   const selectedDateStr = selectedDate.toISOString().split('T')[0];
   const salesForSelected = sales.filter(s => {
-    const saleDateStr = new Date(s.fecha + 'T12:00:00').toISOString().split('T')[0];
-    return saleDateStr === selectedDateStr;
+    if (!s.fecha) return false;
+    try {
+      const saleDateStr = new Date(s.fecha + 'T12:00:00').toISOString().split('T')[0];
+      return saleDateStr === selectedDateStr;
+    } catch (e) {
+      return false;
+    }
   });
+
+  const salesWithoutDate = sales.filter(s => !s.fecha);
 
   const exportData = () => {
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(sales, null, 2));
@@ -97,8 +105,13 @@ export default function SalesCalendar({ onClose, onFocus, zIndex, initialPositio
               
               // Check if there are sales on this day
               const hasSales = sales.some(s => {
-                const sDate = new Date(s.fecha + 'T12:00:00').toISOString().split('T')[0];
-                return sDate === dateStr;
+                if (!s.fecha) return false;
+                try {
+                  const sDate = new Date(s.fecha + 'T12:00:00').toISOString().split('T')[0];
+                  return sDate === dateStr;
+                } catch (e) {
+                  return false;
+                }
               });
 
               const isSelected = selectedDate.toISOString().split('T')[0] === dateStr;
@@ -125,16 +138,73 @@ export default function SalesCalendar({ onClose, onFocus, zIndex, initialPositio
           </div>
         </div>
 
-        <div className="calendar-details">
-          <div className="details-header">
-            Entregas para el {selectedDate.getDate()} de {monthNames[selectedDate.getMonth()]}
+        <div className="calendar-details" style={{ display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', gap: '5px', marginBottom: '10px', borderBottom: '2px solid var(--window-border)' }}>
+            <button 
+              type="button"
+              onClick={() => setActiveTab('daily')} 
+              style={{
+                fontFamily: 'var(--font-pixel)',
+                padding: '6px 12px',
+                fontSize: '12px',
+                cursor: 'pointer',
+                background: activeTab === 'daily' ? 'var(--window-bg)' : 'var(--btn-bg)',
+                border: '2px solid var(--window-border)',
+                borderBottom: activeTab === 'daily' ? 'none' : '2px solid var(--window-border)',
+                marginBottom: activeTab === 'daily' ? '-2px' : '0px',
+                fontWeight: activeTab === 'daily' ? 'bold' : 'normal',
+                color: activeTab === 'daily' ? 'var(--highlight)' : 'var(--text-main)',
+                zIndex: activeTab === 'daily' ? 2 : 1
+              }}
+            >
+              📅 Ver Día
+            </button>
+            <button 
+              type="button"
+              onClick={() => setActiveTab('nodate')} 
+              style={{
+                fontFamily: 'var(--font-pixel)',
+                padding: '6px 12px',
+                fontSize: '12px',
+                cursor: 'pointer',
+                background: activeTab === 'nodate' ? 'var(--window-bg)' : 'var(--btn-bg)',
+                border: '2px solid var(--window-border)',
+                borderBottom: activeTab === 'nodate' ? 'none' : '2px solid var(--window-border)',
+                marginBottom: activeTab === 'nodate' ? '-2px' : '0px',
+                fontWeight: activeTab === 'nodate' ? 'bold' : 'normal',
+                color: activeTab === 'nodate' ? 'var(--highlight)' : 'var(--text-main)',
+                zIndex: activeTab === 'nodate' ? 2 : 1
+              }}
+            >
+              📌 Sin Fecha ({salesWithoutDate.length})
+            </button>
           </div>
-          <SalesList 
-            sales={salesForSelected} 
-            onRemove={onRemove} 
-            onTogglePayment={onTogglePayment} 
-            onUpdateSale={onUpdateSale}
-          />
+
+          {activeTab === 'daily' ? (
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+              <div className="details-header">
+                Entregas para el {selectedDate.getDate()} de {monthNames[selectedDate.getMonth()]}
+              </div>
+              <SalesList 
+                sales={salesForSelected} 
+                onRemove={onRemove} 
+                onTogglePayment={onTogglePayment} 
+                onUpdateSale={onUpdateSale}
+              />
+            </div>
+          ) : (
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+              <div className="details-header" style={{ color: '#ff69b4', borderColor: '#ff69b4' }}>
+                Entregas sin fecha
+              </div>
+              <SalesList 
+                sales={salesWithoutDate} 
+                onRemove={onRemove} 
+                onTogglePayment={onTogglePayment} 
+                onUpdateSale={onUpdateSale}
+              />
+            </div>
+          )}
         </div>
       </div>
     </DraggableWindow>
