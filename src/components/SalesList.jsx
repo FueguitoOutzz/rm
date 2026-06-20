@@ -66,9 +66,9 @@ export default function SalesList({ sales, onRemove, onTogglePayment, onUpdateSa
     }
     return (
       <span 
-        onPointerDown={(e) => handleEditClick(e, sale.id, fieldName, sale[fieldName])}
+        onDoubleClick={(e) => handleEditClick(e, sale.id, fieldName, sale[fieldName])}
         style={{ cursor: 'pointer', borderBottom: '1px dotted #ccc' }}
-        title={`Click para editar ${label}`}
+        title={`Doble click para editar ${label}`}
       >
         {displayValue || '...'}
       </span>
@@ -136,10 +136,9 @@ Detalles: ${sale.descripcion || 'Ninguno'}`;
               ) : (
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <strong
-                    onPointerDown={(e) => e.stopPropagation()}
-                    onClick={() => { setEditingDateId(sale.id); setEditDateVal(sale.fecha || ''); }}
+                    onDoubleClick={(e) => { e.stopPropagation(); setEditingDateId(sale.id); setEditDateVal(sale.fecha || ''); }}
                     style={{ cursor: 'pointer', borderBottom: '1px dashed var(--window-border)' }}
-                    title="Click para editar fecha de entrega"
+                    title="Doble click para editar fecha de entrega"
                   >
                     {sale.fecha ? new Date(sale.fecha + 'T12:00:00').toLocaleDateString('es-ES') : 'Sin fecha aún'}
                   </strong>
@@ -209,11 +208,10 @@ Detalles: ${sale.descripcion || 'Ninguno'}`;
                 </div>
               ) : (
                 <span
-                  onPointerDown={(e) => e.stopPropagation()}
-                  onClick={() => { setEditingId(sale.id); setEditVal(sale.descripcion || ''); }}
+                  onDoubleClick={(e) => { e.stopPropagation(); setEditingId(sale.id); setEditVal(sale.descripcion || ''); }}
                   style={{ cursor: 'pointer', color: sale.descripcion ? 'inherit' : '#888', fontStyle: sale.descripcion ? 'normal' : 'italic' }}
                 >
-                  {sale.descripcion || 'Click aquí para agregar lugar, hora, etc... ✎'}
+                  {sale.descripcion || 'Doble click aquí para agregar lugar, hora, etc... ✎'}
                 </span>
               )}
             </div>
