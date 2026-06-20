@@ -244,7 +244,80 @@ export default function SalesCalendar({ onClose, onFocus, zIndex, initialPositio
             )}
           </div>
         </div>
+<<<<<<< HEAD
       </DndContext>
+=======
+
+        <div className="calendar-details" style={{ display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', gap: '5px', marginBottom: '10px', borderBottom: '2px solid var(--window-border)' }}>
+            <button 
+              type="button"
+              onClick={() => setActiveTab('daily')} 
+              style={{
+                fontFamily: 'var(--font-pixel)',
+                padding: '6px 12px',
+                fontSize: '12px',
+                cursor: 'pointer',
+                background: activeTab === 'daily' ? 'var(--window-bg)' : 'var(--btn-bg)',
+                border: '2px solid var(--window-border)',
+                borderBottom: activeTab === 'daily' ? 'none' : '2px solid var(--window-border)',
+                marginBottom: activeTab === 'daily' ? '-2px' : '0px',
+                fontWeight: activeTab === 'daily' ? 'bold' : 'normal',
+                color: activeTab === 'daily' ? 'var(--highlight)' : 'var(--text-main)',
+                zIndex: activeTab === 'daily' ? 2 : 1
+              }}
+            >
+              📅 Ver Día
+            </button>
+            <button 
+              type="button"
+              onClick={() => setActiveTab('nodate')} 
+              style={{
+                fontFamily: 'var(--font-pixel)',
+                padding: '6px 12px',
+                fontSize: '12px',
+                cursor: 'pointer',
+                background: activeTab === 'nodate' ? 'var(--window-bg)' : 'var(--btn-bg)',
+                border: '2px solid var(--window-border)',
+                borderBottom: activeTab === 'nodate' ? 'none' : '2px solid var(--window-border)',
+                marginBottom: activeTab === 'nodate' ? '-2px' : '0px',
+                fontWeight: activeTab === 'nodate' ? 'bold' : 'normal',
+                color: activeTab === 'nodate' ? 'var(--highlight)' : 'var(--text-main)',
+                zIndex: activeTab === 'nodate' ? 2 : 1
+              }}
+            >
+              📌 Sin Fecha ({salesWithoutDate.length})
+            </button>
+          </div>
+
+          {activeTab === 'daily' ? (
+            <div className="calendar-details-list">
+              <div className="details-header">
+                Entregas para el {selectedDate.getDate()} de {monthNames[selectedDate.getMonth()]}
+              </div>
+              <SalesList 
+                sales={salesForSelected} 
+                onRemove={onRemove} 
+                onTogglePayment={onTogglePayment} 
+                onUpdateSale={onUpdateSale}
+              />
+            </div>
+          ) : (
+            <div className="calendar-details-list">
+              <div className="details-header" style={{ color: '#ff69b4', borderColor: '#ff69b4' }}>
+                Entregas sin fecha
+              </div>
+              <SalesList 
+                sales={salesWithoutDate} 
+                onRemove={onRemove} 
+                onTogglePayment={onTogglePayment} 
+                onUpdateSale={onUpdateSale}
+              />
+            </div>
+          )}
+        </div>
+      </div>
+>>>>>>> 1071ce0061a1292b15dee510ba59b42bb3d4c69f
     </DraggableWindow>
   );
 }

@@ -766,6 +766,7 @@ input:focus, select:focus {
   color: var(--text-main);
 }
 
+<<<<<<< HEAD
 @keyframes bounceIn {
   0% {
     opacity: 0;
@@ -782,3 +783,175 @@ input:focus, select:focus {
     transform: translate(-50%, -50%) scale(1);
   }
 }
+=======
+.calendar-details-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* RESPONSIVE DESIGN - MOBILE PHONES SUPPORT */
+@media (max-width: 768px) {
+  /* Let windows automatically maximize to cover the active desktop area */
+  .window {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Support minimized state of windows on mobile */
+  .window.minimized {
+    height: auto !important;
+    max-height: auto !important;
+  }
+
+  .title-bar {
+    cursor: default !important;
+  }
+
+  /* Desktop icons grid optimization on mobile */
+  .desktop-icons {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(75px, 1fr)) !important;
+    gap: 8px !important;
+    padding: 10px !important;
+    float: none !important;
+    max-height: calc(100vh - 100px) !important;
+    overflow-y: auto !important;
+  }
+
+  .desktop-icon {
+    margin: 5px !important;
+    float: none !important;
+    width: auto !important;
+  }
+
+  /* Fade out background collage images on mobile to avoid covering icons/apps */
+  .background-collage {
+    opacity: 0.15 !important;
+  }
+
+  /* Hide Instagram absolute sticker or shrink it */
+  .desktop-area > .desktop-icon[style*="position: absolute"] {
+    position: static !important;
+    margin: 5px !important;
+    width: auto !important;
+  }
+
+  /* Calendar window: stack panels vertically on mobile */
+  .calendar-container {
+    flex-direction: column !important;
+    overflow-y: auto !important;
+    height: 100% !important;
+    gap: 10px !important;
+  }
+
+  .calendar-left-pane {
+    flex: none !important;
+    width: 100% !important;
+  }
+
+  .calendar-details {
+    flex: none !important;
+    width: 100% !important;
+    border-left: none !important;
+    border-top: 2px solid var(--window-border) !important;
+    padding-left: 0 !important;
+    padding-top: 10px !important;
+    overflow-y: visible !important;
+  }
+
+  .calendar-details-list {
+    overflow-y: visible !important;
+    flex: none !important;
+    height: auto !important;
+  }
+
+  /* Taskbar layout optimization */
+  .taskbar {
+    padding: 0 4px !important;
+    gap: 5px !important;
+  }
+
+  .start-button {
+    font-size: 13px !important;
+    padding: 4px 6px !important;
+  }
+
+  .taskbar-player {
+    gap: 6px !important;
+    margin: 0 4px !important;
+    padding-left: 6px !important;
+    border-left: 1px inset var(--taskbar-border) !important;
+  }
+
+  .now-playing {
+    max-width: 85px !important;
+    gap: 4px !important;
+  }
+
+  .now-playing img {
+    display: none !important; /* Hide album art in taskbar on phone */
+  }
+
+  .track-info h4 {
+    font-size: 0.8rem !important;
+  }
+
+  .track-info p {
+    font-size: 0.7rem !important;
+  }
+
+  .volume-control {
+    display: none !important; /* Hide volume controls on mobile */
+  }
+
+  .clock {
+    display: none !important; /* Hide clock on mobile to make room */
+  }
+
+  /* Memory Game layout scaling on phone */
+  .memory-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 6px !important;
+  }
+
+  .memory-card {
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  .memory-card-front, .memory-card-back {
+    font-size: 20px !important;
+  }
+
+  /* Tamagotchi scaling */
+  .tamagotchi-sprite {
+    font-size: 38px !important;
+    margin: 10px 0 !important;
+  }
+
+  /* Playlist View Adjustments on mobile */
+  .playlist-header {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 10px !important;
+  }
+
+  .playlist-cover {
+    width: 80px !important;
+    height: 80px !important;
+  }
+
+  .playlist-info h2 {
+    font-size: 1.4rem !important;
+  }
+}
+
+>>>>>>> 1071ce0061a1292b15dee510ba59b42bb3d4c69f

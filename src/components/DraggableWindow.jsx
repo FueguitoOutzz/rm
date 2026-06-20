@@ -36,7 +36,7 @@ export default function DraggableWindow({ title, onClose, onFocus, zIndex, initi
 
   return (
     <div 
-      className="window" 
+      className={`window ${isMinimized ? 'minimized' : ''} ${isMaximized ? 'maximized' : ''}`}
       style={isMaximized ? {
         position: 'absolute',
         left: 0,

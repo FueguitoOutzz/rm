@@ -20,14 +20,14 @@ export default defineConfig({
         start_url: '/',
         icons: [
           {
-            src: 'spoty.png',
+            src: 'paragua.jfif',
             sizes: '192x192',
-            type: 'image/png'
+            type: 'image/jpeg'
           },
           {
-            src: 'spoty.png',
+            src: 'paragua.jfif',
             sizes: '512x512',
-            type: 'image/png'
+            type: 'image/jpeg'
           }
         ]
       }
