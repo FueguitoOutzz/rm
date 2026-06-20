@@ -1,27 +1,4 @@
 import React, { useState } from 'react';
-import { useDraggable } from '@dnd-kit/core';
-import { CSS } from '@dnd-kit/utilities';
-
-function DraggableSaleItem({ sale, children }) {
-  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
-    id: sale.id.toString(),
-    data: sale
-  });
-
-  const style = {
-    transform: CSS.Translate.toString(transform),
-    opacity: isDragging ? 0.5 : 1,
-    position: isDragging ? 'relative' : 'static',
-    zIndex: isDragging ? 999 : 1,
-    touchAction: 'none' // Important for touch devices
-  };
-
-  return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      {children}
-    </div>
-  );
-}
 
 export default function SalesList({ sales, onRemove, onTogglePayment, onUpdateSale }) {
   const [editingId, setEditingId] = useState(null);
@@ -113,8 +90,7 @@ Detalles: ${sale.descripcion || 'Ninguno'}`;
         if (sale.estadoPago === 'Pagado') statusClass = 'status-pagado';
 
         return (
-          <DraggableSaleItem key={sale.id} sale={sale}>
-            <div className="sale-item" style={{ cursor: 'grab' }}>
+          <div key={sale.id} className="sale-item">
             <div className="sale-item-header">
               {editingDateId === sale.id ? (
                 <input
@@ -154,6 +130,13 @@ Detalles: ${sale.descripcion || 'Ninguno'}`;
                       🗓️
                     </a>
                   )}
+                  <button
+                    onClick={(e) => { e.stopPropagation(); onUpdateSale(sale.id, { isEnvio: !sale.isEnvio }); }}
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: '16px' }}
+                    title={sale.isEnvio ? "Regresar a Entregas" : "Mover a Envíos"}
+                  >
+                    {sale.isEnvio ? '🔙' : '📦'}
+                  </button>
                 </div>
               )}
               <span className={statusClass} onPointerDown={(e) => e.stopPropagation()} onClick={() => onTogglePayment(sale.id)} style={{ cursor: 'pointer' }}>
@@ -217,10 +200,9 @@ Detalles: ${sale.descripcion || 'Ninguno'}`;
             </div>
 
             <div style={{ marginTop: '5px', textAlign: 'right' }}>
-              <button onPointerDown={(e) => e.stopPropagation()} onClick={() => onRemove(sale.id)} style={{ padding: '2px 5px', fontSize: '10px' }}>Borrar</button>
+              <button onClick={() => onRemove(sale.id)} style={{ padding: '2px 5px', fontSize: '10px' }}>Borrar</button>
             </div>
           </div>
-          </DraggableSaleItem>
         );
       })}
     </div>
