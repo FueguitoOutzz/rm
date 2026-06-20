@@ -766,7 +766,6 @@ input:focus, select:focus {
   color: var(--text-main);
 }
 
-<<<<<<< HEAD
 @keyframes bounceIn {
   0% {
     opacity: 0;
@@ -783,7 +782,6 @@ input:focus, select:focus {
     transform: translate(-50%, -50%) scale(1);
   }
 }
-=======
 .calendar-details-list {
   flex: 1;
   display: flex;
@@ -953,5 +951,3 @@ input:focus, select:focus {
     font-size: 1.4rem !important;
   }
 }
-
->>>>>>> 1071ce0061a1292b15dee510ba59b42bb3d4c69f
