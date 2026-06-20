@@ -23,6 +23,13 @@ function App() {
     { id: '2mwglwuk0B2aGHkMQTKB5f', type: 'playlist', x: 20, y: 20 }
   ]);
   const [activeWindow, setActiveWindow] = useState('2mwglwuk0B2aGHkMQTKB5f');
+  const [showSaleCreatedAnim, setShowSaleCreatedAnim] = useState(false);
+
+  const handleAddSale = (saleData) => {
+    addSale(saleData);
+    setShowSaleCreatedAnim(true);
+    setTimeout(() => setShowSaleCreatedAnim(false), 3000);
+  };
 
   const openApp = (type, id = null) => {
     const windowId = id || `${type}-${Date.now()}`;
@@ -169,6 +176,42 @@ function App() {
               </div>
             )}
 
+            {showSaleCreatedAnim && (
+              <div style={{
+                position: 'fixed',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                zIndex: 9999,
+                pointerEvents: 'none',
+                textAlign: 'center',
+                animation: 'bounceIn 0.5s ease-out'
+              }}>
+                <img 
+                  src="/fri.gif" 
+                  alt="Sale created!" 
+                  style={{ 
+                    width: '300px', 
+                    height: 'auto', 
+                    filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.5))' 
+                  }} 
+                />
+                <div style={{
+                  fontSize: '24px',
+                  color: '#fff',
+                  marginTop: '10px',
+                  fontFamily: 'var(--font-pixel)',
+                  background: 'rgba(0,0,0,0.6)',
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  textShadow: '2px 2px 0px #000',
+                  display: 'inline-block'
+                }}>
+                  ¡Venta creada!
+                </div>
+              </div>
+            )}
+
             {openWindows.map(win => {
               const commonProps = {
                 key: win.id,
@@ -188,7 +231,7 @@ function App() {
                 return <Tamagotchi {...commonProps} />;
               }
               if (win.type === 'salesForm') {
-                return <SalesForm {...commonProps} onAddSale={addSale} />;
+                return <SalesForm {...commonProps} onAddSale={handleAddSale} />;
               }
               if (win.type === 'salesCalendar') {
                 return <SalesCalendar {...commonProps} sales={sales} onRemove={removeSale} onTogglePayment={togglePaymentStatus} onUpdateSale={updateSale} onImportSales={importSales} />;
