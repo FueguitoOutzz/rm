@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Heart, Sparkles, Clock, Calendar, ArrowUpDown, ChevronDown, ChevronUp } from 'lucide-react';
 import './BackgroundCounter.css';
 
-const START_DATE = new Date(2022, 8, 1, 0, 0, 0); // 1 de Septiembre de 2022 (Mes 8 = Septiembre en JS)
+const START_DATE = new Date(2022, 9, 1, 0, 0, 0); // 1 de Octubre de 2022 (Mes 9 = Octubre en JS)
 
 export default function BackgroundCounter() {
   const [now, setNow] = useState(new Date());
@@ -69,7 +69,7 @@ export default function BackgroundCounter() {
     localStorage.setItem('love_counter_order', nextOrder);
   };
 
-  // --- Cálculos de tiempo transcurrido desde el 1 de Septiembre de 2022 ---
+  // --- Cálculos de tiempo transcurrido desde el 1 de Octubre de 2022 ---
   const elapsedMs = Math.max(0, now.getTime() - START_DATE.getTime());
   const totalDays = Math.floor(elapsedMs / (1000 * 60 * 60 * 24));
   const elapsedHours = Math.floor((elapsedMs / (1000 * 60 * 60)) % 24);
@@ -91,16 +91,16 @@ export default function BackgroundCounter() {
     elapsedYears -= 1;
   }
 
-  // --- Cálculos para el próximo aniversario (1 de Septiembre) ---
+  // --- Cálculos para el próximo aniversario (1 de Octubre) ---
   const currentYear = now.getFullYear();
-  let nextAnniv = new Date(currentYear, 8, 1, 0, 0, 0);
-  const isTodayAnniversary = now.getMonth() === 8 && now.getDate() === 1;
+  let nextAnniv = new Date(currentYear, 9, 1, 0, 0, 0);
+  const isTodayAnniversary = now.getMonth() === 9 && now.getDate() === 1;
 
   if (now.getTime() > nextAnniv.getTime() && !isTodayAnniversary) {
-    nextAnniv = new Date(currentYear + 1, 8, 1, 0, 0, 0);
+    nextAnniv = new Date(currentYear + 1, 9, 1, 0, 0, 0);
   }
 
-  const prevAnniv = new Date(nextAnniv.getFullYear() - 1, 8, 1, 0, 0, 0);
+  const prevAnniv = new Date(nextAnniv.getFullYear() - 1, 9, 1, 0, 0, 0);
   const yearSpanMs = nextAnniv.getTime() - prevAnniv.getTime();
   const currentProgressMs = Math.max(0, now.getTime() - prevAnniv.getTime());
   const yearProgressPercent = Math.min(100, Math.max(0, Math.round((currentProgressMs / yearSpanMs) * 100)));
@@ -114,7 +114,7 @@ export default function BackgroundCounter() {
   const nextAnnivNumber = nextAnniv.getFullYear() - 2022;
   const pad = (n) => String(n).padStart(2, '0');
 
-  // Bloque 1: Días que faltan para el próximo 1 de Septiembre
+  // Bloque 1: Días que faltan para el próximo 1 de Octubre
   const renderCountdownBlock = () => (
     <div className="bg-counter-block countdown-section">
       <div className="counter-section-header">
@@ -124,8 +124,8 @@ export default function BackgroundCounter() {
         </span>
         <span className="section-subtext">
           {isTodayAnniversary 
-            ? '1 de Septiembre ♥' 
-            : `Próximo 1 de Septiembre (${nextAnnivNumber}° Aniversario)`}
+            ? '1 de Octubre ♥' 
+            : `Próximo 1 de Octubre (${nextAnnivNumber}° Aniversario)`}
         </span>
       </div>
 
@@ -184,7 +184,7 @@ export default function BackgroundCounter() {
     </div>
   );
 
-  // Bloque 2: Tiempo transcurrido desde el 1 de Septiembre de 2022
+  // Bloque 2: Tiempo transcurrido desde el 1 de Octubre de 2022
   const renderElapsedBlock = () => (
     <div className="bg-counter-block elapsed-section">
       <div className="counter-section-header">
@@ -192,7 +192,7 @@ export default function BackgroundCounter() {
           <Heart size={12} className="tag-icon heart-pulse" />
           HISTORIA JUNTOS
         </span>
-        <span className="section-subtext">Desde el 01/09/2022</span>
+        <span className="section-subtext">Desde el 01/10/2022</span>
       </div>
 
       <div className="elapsed-hero-display">
@@ -207,7 +207,7 @@ export default function BackgroundCounter() {
       <div className="elapsed-breakdown-row">
         <span className="breakdown-item"><b>{elapsedYears}</b> {elapsedYears === 1 ? 'año' : 'años'}</span>
         <span className="breakdown-dot">·</span>
-        <span className="breakdown-item"><b>{elapsedMonths}</b> {elapsedMonths === 1 ? 'meses' : 'meses'}</span>
+        <span className="breakdown-item"><b>{elapsedMonths}</b> {elapsedMonths === 1 ? 'mes' : 'meses'}</span>
         <span className="breakdown-dot">·</span>
         <span className="breakdown-item"><b>{elapsedCalendarDays}</b> {elapsedCalendarDays === 1 ? 'día' : 'días'}</span>
       </div>
@@ -238,7 +238,7 @@ export default function BackgroundCounter() {
       >
         <div className="counter-widget-title">
           <Heart size={13} className="header-heart heart-pulse" />
-          <span>♥ 01 . 09 . 2022 ♥</span>
+          <span>♥ 01 . 10 . 2022 ♥</span>
         </div>
         <div className="counter-widget-actions">
           <button 
@@ -267,7 +267,7 @@ export default function BackgroundCounter() {
         <div className="counter-widget-minimized-content" onClick={() => setIsMinimized(false)}>
           <span className="mini-badge">♥ {totalDays.toLocaleString()} días juntos</span>
           <span className="mini-divider">|</span>
-          <span className="mini-badge">Faltan {daysLeft} días (1 Sep)</span>
+          <span className="mini-badge">Faltan {daysLeft} días (1 Oct)</span>
         </div>
       ) : (
         <div className="counter-widget-body">
