@@ -9,6 +9,60 @@ export default function Playlist({ token, playlistId, deviceId, initialPosition,
 
   useEffect(() => {
     const getPlaylist = async () => {
+      if (!token || !playlistId) return;
+
+      if (token === 'guest_preview' || token === 'guest') {
+        setPlaylist({
+          name: "cause im under your spell.. 🌼",
+          description: "Especial Flores Amarillas 💛 - ¡2 nuevos temas agregados!",
+          images: [{ url: "/spoty.png" }],
+          tracks: {
+            items: [
+              {
+                track: {
+                  id: 'track-new-1',
+                  name: "Flores Amarillas (Especial 21 Sep)",
+                  artists: [{ name: "Floricienta" }],
+                  album: { name: "cause im under your spell..", images: [{ url: "/amechan.png" }] },
+                  duration_ms: 221000,
+                  isNew: true
+                }
+              },
+              {
+                track: {
+                  id: 'track-new-2',
+                  name: "Under Your Spell",
+                  artists: [{ name: "Snow Strippers" }],
+                  album: { name: "April Mixtape 3", images: [{ url: "/won.jpeg" }] },
+                  duration_ms: 154000,
+                  isNew: true
+                }
+              },
+              {
+                track: {
+                  id: 'track-3',
+                  name: "Kawaikute Gomen",
+                  artists: [{ name: "HoneyWorks" }],
+                  album: { name: "Chiikawa Favorites", images: [{ url: "/chii.png" }] },
+                  duration_ms: 218000
+                }
+              },
+              {
+                track: {
+                  id: 'track-4',
+                  name: "Ame-chan Lullaby",
+                  artists: [{ name: "NSO Sound" }],
+                  album: { name: "Needy Streamer", images: [{ url: "/ame2.png" }] },
+                  duration_ms: 180000
+                }
+              }
+            ]
+          }
+        });
+        setErrorMsg(null);
+        return;
+      }
+
       try {
         let data;
         try {
@@ -41,7 +95,11 @@ export default function Playlist({ token, playlistId, deviceId, initialPosition,
       } catch (error) {
         console.error("Error fetching playlist", error);
         if (error.response && error.response.status === 401) {
-          if(onLogout) onLogout();
+          if (token !== 'guest_preview' && token !== 'guest' && onLogout) {
+            onLogout();
+          } else {
+            setErrorMsg("Modo Escritorio: Inicia sesión en Spotify para conectar tus playlists.");
+          }
         } else if (error.response && error.response.status === 403) {
           const srvMsg = error.response.data?.error?.message || "Sin detalles adicionales";
           setErrorMsg(`Error 403 de Spotify: ${srvMsg}. Asegúrate de que tienes permisos.`);
@@ -51,12 +109,14 @@ export default function Playlist({ token, playlistId, deviceId, initialPosition,
       }
     };
 
-    if (token && playlistId) {
-      getPlaylist();
-    }
+    getPlaylist();
   }, [token, playlistId, onLogout]);
 
   const playTrack = async (uri, index) => {
+    if (token === 'guest_preview' || token === 'guest') {
+      alert("🌼 Modo Escritorio: Inicia sesión con Spotify para reproducir música completa en vivo.");
+      return;
+    }
     if (!deviceId) {
       alert("El reproductor aún no está listo. Espera a que diga NO SIGNAL.");
       return;
@@ -114,6 +174,26 @@ export default function Playlist({ token, playlistId, deviceId, initialPosition,
           </div>
         </div>
 
+        <div style={{
+          background: 'linear-gradient(90deg, #fff9db 0%, #fff3bf 100%)',
+          border: '1.5px dashed #fab005',
+          borderRadius: '4px',
+          padding: '6px 10px',
+          marginBottom: '12px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          fontFamily: 'var(--font-pixel)',
+          fontSize: '12px',
+          color: '#d9480f',
+          boxShadow: '1px 1px 0px rgba(0,0,0,0.1)'
+        }}>
+          <span style={{ fontSize: '18px' }}>🌼</span>
+          <div style={{ flex: 1 }}>
+            <b style={{ color: '#d9480f' }}>¡Especial Flores Amarillas!</b> Se agregaron <b>2 nuevos temas</b> a la playlist. 💛✨
+          </div>
+        </div>
+
         <div className="tracks-list">
           {(() => {
             let tracksArray = [];
@@ -138,13 +218,32 @@ export default function Playlist({ token, playlistId, deviceId, initialPosition,
               return (
                 <div className="track-card" key={(trackData.id || index) + "-" + index}>
                   <img 
-                    src={trackData.album?.images?.[0]?.url || 'https://placehold.co/60x60/302b63/FFFFFF?text=Music'} 
-                    alt="Album cover" 
+                    src={trackData.album?.images?.[0]?.url || "/spoty.png"} 
+                    alt={trackData.name} 
                     className="track-img" 
                   />
                   
                   <div className="track-details">
-                    <h3 className="track-name">{trackData.name || 'Canción desconocida'}</h3>
+                    <h3 className="track-name">
+                      {trackData.name || 'Canción desconocida'}
+                      {trackData.isNew && (
+                        <span style={{
+                          background: '#ffd43b',
+                          color: '#b74309',
+                          fontSize: '10px',
+                          fontWeight: 'bold',
+                          padding: '1px 6px',
+                          borderRadius: '3px',
+                          marginLeft: '6px',
+                          border: '1px solid #fab005',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '2px'
+                        }}>
+                          🌼 NUEVO
+                        </span>
+                      )}
+                    </h3>
                     <p className="track-artist">{trackData.artists?.map(a => a.name).join(', ') || 'Artista desconocido'}</p>
                   </div>
 

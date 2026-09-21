@@ -16,6 +16,11 @@ export default function Player({ token, onDeviceReady, onPlaybackStateChange }) 
   }, [currentTrack, isPaused, onPlaybackStateChange]);
 
   useEffect(() => {
+    if (!token || token === 'guest_preview' || token === 'guest') {
+      setIsReady(false);
+      return;
+    }
+
     window.onSpotifyWebPlaybackSDKReady = () => {
       const spotifyPlayer = new window.Spotify.Player({
         name: 'NSO Music Player',

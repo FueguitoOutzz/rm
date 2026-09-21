@@ -2,7 +2,7 @@ import React from 'react';
 import { Music, Heart } from 'lucide-react';
 import { redirectToAuthCodeFlow } from '../utils/spotifyAuth';
 
-export default function Login() {
+export default function Login({ onGuestLogin }) {
   const handleLogin = async () => {
     await redirectToAuthCodeFlow();
   };
@@ -24,9 +24,21 @@ export default function Login() {
           </div>
           <h1>OS Chiikawa ❤️</h1>
           <p>La insanidad que compartimos</p>
-          <button className="start-button" onClick={handleLogin} style={{margin: '20px auto', fontSize: '14px', padding: '8px 16px', background: '#1DB954'}}>
-            <Music size={16} /> Conectar con Spotify
-          </button>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center', marginTop: '16px' }}>
+            <button className="start-button" onClick={handleLogin} style={{fontSize: '14px', padding: '8px 16px', background: '#1DB954'}}>
+              <Music size={16} /> Conectar con Spotify
+            </button>
+            {onGuestLogin && (
+              <button 
+                type="button"
+                className="start-button" 
+                onClick={onGuestLogin} 
+                style={{fontSize: '12px', padding: '5px 12px', background: '#bfa1f6', color: '#fff'}}
+              >
+                🌸 Ver Escritorio
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -1,0 +1,100 @@
+/* YELLOW FLOWERS SPECIAL EDITION (21 DE SEPTIEMBRE) */
+
+.yellow-flowers-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1; /* Sits in background wallpaper */
+}
+
+/* Individual falling/floating flower */
+.floating-yellow-flower {
+  position: absolute;
+  user-select: none;
+  pointer-events: none;
+  opacity: 0.85;
+  filter: drop-shadow(1px 2px 3px rgba(255, 180, 0, 0.35));
+  will-change: transform;
+  animation-name: floatDownAndSway;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes floatDownAndSway {
+  0% {
+    transform: translateY(-50px) translateX(0px) rotate(0deg) scale(0.9);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateY(50vh) translateX(35px) rotate(180deg) scale(1.05);
+    opacity: 0.95;
+  }
+  90% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(105vh) translateX(-20px) rotate(360deg) scale(0.9);
+    opacity: 0;
+  }
+}
+
+/* Yellow Flowers Special Edition Desktop Badge */
+.yellow-flowers-desktop-banner {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #fff9db 0%, #ffe066 50%, #fff9db 100%);
+  border: 1.5px solid #f59f00;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.15);
+  border-radius: 14px;
+  padding: 3px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: #794500;
+  font-weight: bold;
+  z-index: 2;
+  pointer-events: auto;
+  letter-spacing: 0.5px;
+  cursor: default;
+}
+
+.yellow-flowers-desktop-banner .pulse-flower {
+  display: inline-block;
+  animation: pulseFlower 2s infinite ease-in-out;
+  font-size: 14px;
+}
+
+@keyframes pulseFlower {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.25) rotate(15deg); }
+}
+
+/* Corner decorative flower garlands */
+.corner-flower-cluster {
+  position: absolute;
+  font-size: 20px;
+  pointer-events: none;
+  opacity: 0.75;
+  line-height: 1;
+}
+
+.corner-flower-top-left {
+  top: 10px;
+  left: 120px;
+}
+
+.corner-flower-top-right {
+  top: 10px;
+  right: 270px;
+}

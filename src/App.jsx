@@ -9,6 +9,10 @@ import SalesForm from './components/SalesForm'
 import SalesCalendar from './components/SalesCalendar'
 import Calculator from './components/Calculator'
 import LyricsWindow from './components/LyricsWindow'
+import BackgroundCounter from './components/BackgroundCounter'
+import DraggableWindow from './components/DraggableWindow'
+import YellowFlowers from './components/YellowFlowers'
+import PlaylistAnnouncement from './components/PlaylistAnnouncement'
 import { useSales } from './hooks/useSales'
 import { getAccessToken } from './utils/spotifyAuth'
 
@@ -69,6 +73,11 @@ function App() {
     checkToken();
   }, [token])
 
+  const handleGuestLogin = () => {
+    window.localStorage.setItem("token_v2", "guest_preview");
+    setToken("guest_preview");
+  };
+
   const logout = () => {
     setToken("")
     window.localStorage.removeItem("token_v2")
@@ -79,9 +88,11 @@ function App() {
     <div className="app-wrapper">
       <div className="desktop-area">
         {!token ? (
-          <Login />
+          <Login onGuestLogin={handleGuestLogin} />
         ) : (
           <>
+            <YellowFlowers />
+
             <div className="background-collage">
               {/* Floating Chii sticker on the left (without frame) */}
               <img 
@@ -100,11 +111,11 @@ function App() {
                 }} 
               />
 
-              <div className="background-sticker" style={{ right: '430px', top: '50px', transform: 'rotate(-6deg)', width: '120px' }}>
-                <img src="/ame2.png" alt="Ame 2" style={{ width: '104px', height: '104px' }} />
+              <div className="background-sticker" style={{ right: '180px', top: '20px', transform: 'rotate(-5deg)', width: '115px' }}>
+                <img src="/ame2.png" alt="Ame 2" style={{ width: '100px', height: '100px' }} />
               </div>
-              <div className="background-sticker" style={{ right: '280px', top: '70px', transform: 'rotate(5deg)', width: '140px' }}>
-                <img src="/amechan.png" alt="Amechan" style={{ width: '124px', height: '124px' }} />
+              <div className="background-sticker" style={{ right: '25px', top: '220px', transform: 'rotate(5deg)', width: '130px' }}>
+                <img src="/amechan.png" alt="Amechan" style={{ width: '116px', height: '116px' }} />
               </div>
               <div className="background-sticker" style={{ right: '180px', bottom: '150px', transform: 'rotate(3deg)', width: '200px' }}>
                 <img src="/kanata.gif" alt="Kanata" style={{ width: '184px', height: '184px' }} />
@@ -117,12 +128,16 @@ function App() {
               </div>
             </div>
 
+            <BackgroundCounter />
+
+            <PlaylistAnnouncement onOpenPlaylist={() => openApp('playlist', '2mwglwuk0B2aGHkMQTKB5f')} />
+
             <div className="desktop-icons">
-              <DesktopIcon image="/spoty.png" label="Main Playlist" onDoubleClick={() => openApp('playlist', '2mwglwuk0B2aGHkMQTKB5f')} />
+              <DesktopIcon image="/spoty.png" label="cause im under your spell.. 🌼" onDoubleClick={() => openApp('playlist', '2mwglwuk0B2aGHkMQTKB5f')} />
               <DesktopIcon image="/spoty.png" label="Lista wonita" onDoubleClick={() => openApp('playlist', '1Ei9Pp9vH76OlQEpobDPvN')} />
               <DesktopIcon image="/spoty.png" label="Todo :)" onDoubleClick={() => openApp('playlist', '5lSW7aosibk10zYLpgvKTa')} />
 
-              
+              <DesktopIcon icon="💖" label="amor.exe" onDoubleClick={() => openApp('aniversario')} />
               <DesktopIcon icon="🎮" label="memoria.exe" onDoubleClick={() => openApp('memory')} />
               <DesktopIcon icon="🐧" label="wino.exe" onDoubleClick={() => openApp('tamagotchi')} />
               
@@ -136,7 +151,7 @@ function App() {
               image="/futa.gif" 
               label="Instagram" 
               onDoubleClick={() => window.open("https://www.instagram.com/sylvanian.ccp/", "_blank")} 
-              style={{ position: 'absolute', right: '20px', top: '20px', margin: 0, width: '120px' }}
+              style={{ position: 'absolute', right: '25px', top: '20px', margin: 0, width: '120px' }}
               imageStyle={{ width: '95px', height: '95px' }}
             />
 
@@ -241,6 +256,39 @@ function App() {
               }
               if (win.type === 'lyrics') {
                 return <LyricsWindow {...commonProps} currentTrack={playbackState.currentTrack} />;
+              }
+              if (win.type === 'aniversario') {
+                return (
+                  <DraggableWindow {...commonProps} title="amor.exe - 01/10/2022" width="380px">
+                    <div style={{ padding: '16px', textAlign: 'center', fontFamily: 'var(--font-pixel)', display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
+                      <div style={{ fontSize: '38px', animation: 'heartPulse 1.5s infinite ease-in-out' }}>💖</div>
+                      <h2 style={{ fontSize: '18px', color: '#d63384', margin: 0 }}>¡Nuestra Historia de Amor!</h2>
+                      <p style={{ fontSize: '14px', color: '#4a2c5a', lineHeight: '1.5', margin: 0 }}>
+                        Juntos desde el <b>1 de Octubre de 2022</b> 💕<br />
+                        Tu contador interactivo en vivo está activo en el fondo de tu escritorio.
+                      </p>
+                      <div style={{ 
+                        padding: '12px 14px', 
+                        background: 'linear-gradient(180deg, #ffffff 0%, #fff0f7 100%)', 
+                        border: '1.5px dashed #ff69b4', 
+                        borderRadius: '6px', 
+                        fontSize: '12px', 
+                        color: '#7b38a6',
+                        lineHeight: '1.6'
+                      }}>
+                        ✨ "Cada día, cada hora y cada segundo a tu lado son lo mejor que me ha pasado." ✨
+                      </div>
+                      <button 
+                        type="button" 
+                        className="btn-primary" 
+                        onClick={commonProps.onClose} 
+                        style={{ marginTop: '5px', width: 'auto', padding: '6px 20px' }}
+                      >
+                        ♥ Cerrar con amor ♥
+                      </button>
+                    </div>
+                  </DraggableWindow>
+                );
               }
               return null;
             })}
