@@ -13,6 +13,7 @@ import BackgroundCounter from './components/BackgroundCounter'
 import DraggableWindow from './components/DraggableWindow'
 import YellowFlowers from './components/YellowFlowers'
 import PlaylistAnnouncement from './components/PlaylistAnnouncement'
+import CasinoRoulette from './components/CasinoRoulette'
 import { useSales } from './hooks/useSales'
 import { getAccessToken } from './utils/spotifyAuth'
 
@@ -126,6 +127,14 @@ function App() {
               <div className="background-sticker" style={{ left: '260px', bottom: '60px', transform: 'rotate(-4deg)', width: '150px' }}>
                 <img src="/won.jpeg" alt="Won" style={{ width: '134px', height: '134px', objectFit: 'cover' }} />
               </div>
+              <div className="background-sticker" style={{ left: '425px', bottom: '65px', transform: 'rotate(5deg)', width: '145px' }}>
+                <img src="/win.jpeg" alt="Wino" style={{ width: '130px', height: '130px', objectFit: 'cover' }} />
+                <span className="sticker-caption">Wino 🐧</span>
+              </div>
+              <div className="background-sticker" style={{ left: '170px', top: '130px', transform: 'rotate(-5deg)', width: '135px' }}>
+                <img src="/tuki.jpeg" alt="Tuki" style={{ width: '120px', height: '120px', objectFit: 'cover' }} />
+                <span className="sticker-caption">Tuki ✨</span>
+              </div>
             </div>
 
             <BackgroundCounter />
@@ -137,6 +146,7 @@ function App() {
               <DesktopIcon image="/spoty.png" label="Lista wonita" onDoubleClick={() => openApp('playlist', '1Ei9Pp9vH76OlQEpobDPvN')} />
               <DesktopIcon image="/spoty.png" label="Todo :)" onDoubleClick={() => openApp('playlist', '5lSW7aosibk10zYLpgvKTa')} />
 
+              <DesktopIcon icon="🎰" label="ruleta.exe" onDoubleClick={() => openApp('casino')} />
               <DesktopIcon icon="💖" label="amor.exe" onDoubleClick={() => openApp('aniversario')} />
               <DesktopIcon icon="🎮" label="memoria.exe" onDoubleClick={() => openApp('memory')} />
               <DesktopIcon icon="🐧" label="wino.exe" onDoubleClick={() => openApp('tamagotchi')} />
@@ -289,6 +299,9 @@ function App() {
                     </div>
                   </DraggableWindow>
                 );
+              }
+              if (win.type === 'casino') {
+                return <CasinoRoulette {...commonProps} />;
               }
               return null;
             })}

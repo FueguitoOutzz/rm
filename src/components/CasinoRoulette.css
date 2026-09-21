@@ -1,0 +1,398 @@
+/* CASINO ROULETTE (RULETA INSANA) */
+
+.casino-container {
+  padding: 12px 14px;
+  font-family: var(--font-pixel);
+  color: #3a224a;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 520px;
+  margin: 0 auto;
+  user-select: none;
+}
+
+/* Header & Balance Board */
+.casino-scoreboard {
+  background: linear-gradient(135deg, #2d133f 0%, #4a1c6d 100%);
+  border: 2px solid #ffd700;
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #ffffff;
+  box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.3), 3px 3px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.scoreboard-balance-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.balance-lbl {
+  font-size: 10px;
+  color: #fcc419;
+  letter-spacing: 1px;
+}
+
+.balance-val {
+  font-size: 24px;
+  font-weight: 900;
+  color: #51cf66;
+  text-shadow: 0 0 8px rgba(81, 207, 102, 0.6);
+  letter-spacing: 1px;
+}
+
+.scoreboard-daily-col {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.daily-timer-text {
+  font-size: 10px;
+  color: #d0bfff;
+}
+
+.daily-claim-btn {
+  background: linear-gradient(180deg, #ffd43b 0%, #fab005 100%);
+  border: 1px solid #f59f00;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  font-weight: bold;
+  color: #663c00;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(255, 212, 59, 0.6);
+  animation: pulseClaim 1.5s infinite ease-in-out;
+}
+
+.daily-claim-btn:hover {
+  filter: brightness(1.1);
+}
+
+.daily-claim-btn:disabled {
+  background: #6c757d;
+  color: #ced4da;
+  border-color: #495057;
+  cursor: not-allowed;
+  box-shadow: none;
+  animation: none;
+}
+
+@keyframes pulseClaim {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Roulette Wheel Area */
+.wheel-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin: 6px 0;
+}
+
+.wheel-pointer {
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-top: 22px solid #ff1493;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
+  position: absolute;
+  top: -6px;
+  z-index: 10;
+  transition: transform 0.1s ease;
+}
+
+.wheel-pointer.ticking {
+  transform: rotate(-15deg);
+}
+
+.wheel-svg-wrap {
+  width: 250px;
+  height: 250px;
+  position: relative;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.25));
+}
+
+.wheel-svg {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 4px solid #ffd700;
+  box-sizing: border-box;
+}
+
+.wheel-center-cap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  background: radial-gradient(circle, #ffffff 0%, #ff69b4 100%);
+  border: 3px solid #ffd700;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255, 105, 180, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Result announcement ribbon */
+.spin-result-banner {
+  margin-top: 8px;
+  text-align: center;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: bold;
+  animation: bounceIn 0.4s ease-out;
+}
+
+.spin-result-banner.win {
+  background: #d3f9d8;
+  border: 1.5px solid #40c057;
+  color: #2b8a3e;
+}
+
+.spin-result-banner.jackpot {
+  background: linear-gradient(90deg, #fff3bf 0%, #ffec99 100%);
+  border: 2px solid #f59f00;
+  color: #d9480f;
+  font-size: 14px;
+}
+
+.spin-result-banner.lose {
+  background: #ffe3e3;
+  border: 1.5px solid #fa5252;
+  color: #c92a2a;
+}
+
+/* Betting controls */
+.bet-controls-card {
+  background: rgba(255, 245, 252, 0.9);
+  border: 1.5px dashed #caa8f3;
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+.bet-input-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.bet-amount-display {
+  background: #ffffff;
+  border: 1.5px inset #caa8f3;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #8b28a8;
+  flex: 1;
+  text-align: center;
+}
+
+.bet-quick-btns {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.bet-chip-btn {
+  background: #ffffff;
+  border: 1px solid #caa8f3;
+  border-radius: 4px;
+  padding: 3px 6px;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  cursor: pointer;
+  color: #553366;
+  box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+}
+
+.bet-chip-btn:hover {
+  background: #fff0f7;
+  color: #d63384;
+}
+
+.spin-main-btn {
+  width: 100%;
+  padding: 10px;
+  font-family: var(--font-pixel);
+  font-size: 17px;
+  font-weight: bold;
+  background: linear-gradient(180deg, #ff69b4 0%, #d63384 100%);
+  color: #ffffff;
+  border: 2px outset #ffb6c1;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+  margin-top: 8px;
+}
+
+.spin-main-btn:active {
+  border-style: inset;
+  transform: translate(1px, 1px);
+}
+
+.spin-main-btn:disabled {
+  background: #ced4da;
+  border-color: #adb5bd;
+  color: #868e96;
+  cursor: not-allowed;
+}
+
+/* Redeemable Prizes Section */
+.prizes-shop-section {
+  border-top: 2px dashed #caa8f3;
+  padding-top: 10px;
+}
+
+.prizes-shop-title {
+  text-align: center;
+  font-size: 13px;
+  font-weight: bold;
+  color: #7b38a6;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.prizes-cards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.prize-reward-card {
+  background: #ffffff;
+  border: 2px solid #caa8f3;
+  border-radius: 6px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.prize-reward-card.can-afford {
+  border-color: #ffd700;
+  background: linear-gradient(180deg, #fffdf0 0%, #fff9db 100%);
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+.prize-icon-col {
+  font-size: 26px;
+}
+
+.prize-info-col {
+  flex: 1;
+}
+
+.prize-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #333333;
+}
+
+.prize-cost-badge {
+  background: #ffd43b;
+  color: #794500;
+  font-size: 10px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  border: 1px solid #fcc419;
+}
+
+.prize-desc-text {
+  font-size: 11px;
+  color: #666666;
+  margin: 2px 0 4px 0;
+}
+
+.prize-progress-track {
+  height: 5px;
+  background: #e9ecef;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.prize-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff85c0 0%, #ff1493 100%);
+  border-radius: 3px;
+}
+
+.prize-redeem-btn {
+  background: #40c057;
+  border: 2px outset #8ce99a;
+  color: #ffffff;
+  font-family: var(--font-pixel);
+  font-size: 12px;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.prize-redeem-btn:disabled {
+  background: #e9ecef;
+  border-color: #ced4da;
+  color: #adb5bd;
+  cursor: not-allowed;
+}
+
+.prize-redeem-btn:not(:disabled):hover {
+  background: #37b24d;
+}
+
+/* Modal certificate */
+.certificate-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.certificate-card {
+  background: #fffdf5;
+  border: 4px double #d9480f;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  font-family: var(--font-pixel);
+  animation: bounceIn 0.4s ease-out;
+}
