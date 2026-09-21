@@ -1,7 +1,7 @@
 /* LOVE COUNTER WIDGET (BACKGROUND) */
 .desktop-love-counter-widget {
   position: absolute;
-  top: 18px;
+  top: 135px;
   left: 50%;
   transform: translateX(-50%);
   width: 440px;

@@ -4,15 +4,15 @@ import { Sparkles, Trophy, Gift, RotateCw, Coins, Ticket, CheckCircle, X } from 
 import './CasinoRoulette.css';
 
 const SLICES = [
-  { label: '2x', multiplier: 2, color: '#ff85c0', textColor: '#fff', weight: 20 },
+  { label: '2x', multiplier: 2, color: '#ff85c0', textColor: '#fff', weight: 18 },
   { label: '0x', multiplier: 0, color: '#495057', textColor: '#fff', weight: 15 },
-  { label: '1.5x', multiplier: 1.5, color: '#b197fc', textColor: '#fff', weight: 22 },
+  { label: '1.5x', multiplier: 1.5, color: '#b197fc', textColor: '#fff', weight: 20 },
   { label: '3x', multiplier: 3, color: '#ffd43b', textColor: '#664d03', weight: 15 },
-  { label: '0x', multiplier: 0, color: '#343a40', textColor: '#fff', weight: 12 },
+  { label: '0.2x', multiplier: 0.2, color: '#868e96', textColor: '#fff', weight: 14 },
   { label: '5x', multiplier: 5, color: '#ff6b6b', textColor: '#fff', weight: 10 },
-  { label: '2x', multiplier: 2, color: '#f06595', textColor: '#fff', weight: 15 },
+  { label: '2x', multiplier: 2, color: '#f06595', textColor: '#fff', weight: 14 },
   { label: '10x', multiplier: 10, color: '#748ffc', textColor: '#fff', weight: 5 },
-  { label: '0.5x', multiplier: 0.5, color: '#ffa94d', textColor: '#fff', weight: 15 },
+  { label: '0.5x', multiplier: 0.5, color: '#ffa94d', textColor: '#fff', weight: 16 },
   { label: '★ 20x ★', multiplier: 20, color: '#ffd700', textColor: '#b74309', weight: 3 },
 ];
 
@@ -164,7 +164,13 @@ export default function CasinoRoulette({ onClose, onFocus, zIndex, initialPositi
         playSound(180, 'sawtooth', 0.3);
         setSpinResult({
           type: 'lose',
-          message: `😢 ¡Mala suerte! Salió ${chosenSlice.label}. Perdiste $${betAmount.toLocaleString()}`
+          message: `¡Mala suerte! Salió ${chosenSlice.label}. Perdiste $${betAmount.toLocaleString()}`
+        });
+      } else if (chosenSlice.multiplier < 1) {
+        playSound(260, 'triangle', 0.2);
+        setSpinResult({
+          type: 'win',
+          message: `Salió ${chosenSlice.label}. Recuperaste $${wonAmount.toLocaleString()} de tu apuesta`
         });
       } else if (chosenSlice.multiplier >= 10) {
         playSound(523.25, 'triangle', 0.2);
@@ -172,14 +178,14 @@ export default function CasinoRoulette({ onClose, onFocus, zIndex, initialPositi
         setTimeout(() => playSound(783.99, 'triangle', 0.4), 300);
         setSpinResult({
           type: 'jackpot',
-          message: `🌟 ¡JACKPOT INCREÍBLE! Multiplicador ${chosenSlice.label}! Ganaste +$${wonAmount.toLocaleString()} 💎`
+          message: `¡JACKPOT! Multiplicador ${chosenSlice.label}! Ganaste +$${wonAmount.toLocaleString()} ♥`
         });
       } else {
         playSound(523.25, 'sine', 0.2);
         setTimeout(() => playSound(659.25, 'sine', 0.25), 150);
         setSpinResult({
           type: 'win',
-          message: `🎉 ¡Ganaste! Salió ${chosenSlice.label}! +$${wonAmount.toLocaleString()}`
+          message: `¡Ganaste! Salió ${chosenSlice.label}! +$${wonAmount.toLocaleString()}`
         });
       }
     }, 4100);
@@ -302,7 +308,7 @@ export default function CasinoRoulette({ onClose, onFocus, zIndex, initialPositi
               })}
             </svg>
             <div className="wheel-center-cap" onClick={handleSpin}>
-              💖
+              ♥
             </div>
           </div>
 

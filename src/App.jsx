@@ -129,11 +129,11 @@ function App() {
               </div>
               <div className="background-sticker" style={{ left: '425px', bottom: '65px', transform: 'rotate(5deg)', width: '145px' }}>
                 <img src="/win.jpeg" alt="Wino" style={{ width: '130px', height: '130px', objectFit: 'cover' }} />
-                <span className="sticker-caption">Wino 🐧</span>
+                <span className="sticker-caption">Wino</span>
               </div>
-              <div className="background-sticker" style={{ left: '170px', top: '130px', transform: 'rotate(-5deg)', width: '135px' }}>
+              <div className="background-sticker" style={{ left: '120px', top: '270px', transform: 'rotate(-5deg)', width: '135px' }}>
                 <img src="/tuki.jpeg" alt="Tuki" style={{ width: '120px', height: '120px', objectFit: 'cover' }} />
-                <span className="sticker-caption">Tuki ✨</span>
+                <span className="sticker-caption">Tuki</span>
               </div>
             </div>
 
@@ -142,12 +142,12 @@ function App() {
             <PlaylistAnnouncement onOpenPlaylist={() => openApp('playlist', '2mwglwuk0B2aGHkMQTKB5f')} />
 
             <div className="desktop-icons">
-              <DesktopIcon image="/spoty.png" label="cause im under your spell.. 🌼" onDoubleClick={() => openApp('playlist', '2mwglwuk0B2aGHkMQTKB5f')} />
+              <DesktopIcon image="/spoty.png" label="cause im under your spell.." onDoubleClick={() => openApp('playlist', '2mwglwuk0B2aGHkMQTKB5f')} />
               <DesktopIcon image="/spoty.png" label="Lista wonita" onDoubleClick={() => openApp('playlist', '1Ei9Pp9vH76OlQEpobDPvN')} />
               <DesktopIcon image="/spoty.png" label="Todo :)" onDoubleClick={() => openApp('playlist', '5lSW7aosibk10zYLpgvKTa')} />
 
               <DesktopIcon icon="🎰" label="ruleta.exe" onDoubleClick={() => openApp('casino')} />
-              <DesktopIcon icon="💖" label="amor.exe" onDoubleClick={() => openApp('aniversario')} />
+              <DesktopIcon icon="♥" label="amor.exe" onDoubleClick={() => openApp('aniversario')} />
               <DesktopIcon icon="🎮" label="memoria.exe" onDoubleClick={() => openApp('memory')} />
               <DesktopIcon icon="🐧" label="wino.exe" onDoubleClick={() => openApp('tamagotchi')} />
               
@@ -269,12 +269,12 @@ function App() {
               }
               if (win.type === 'aniversario') {
                 return (
-                  <DraggableWindow {...commonProps} title="amor.exe - 01/10/2022" width="380px">
+                  <DraggableWindow {...commonProps} title="amor.exe - 01/09/2022" width="380px">
                     <div style={{ padding: '16px', textAlign: 'center', fontFamily: 'var(--font-pixel)', display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
-                      <div style={{ fontSize: '38px', animation: 'heartPulse 1.5s infinite ease-in-out' }}>💖</div>
+                      <div style={{ fontSize: '38px', color: '#ff1493', animation: 'heartPulse 1.5s infinite ease-in-out' }}>♥</div>
                       <h2 style={{ fontSize: '18px', color: '#d63384', margin: 0 }}>¡Nuestra Historia de Amor!</h2>
                       <p style={{ fontSize: '14px', color: '#4a2c5a', lineHeight: '1.5', margin: 0 }}>
-                        Juntos desde el <b>1 de Octubre de 2022</b> 💕<br />
+                        Juntos desde el <b>1 de Septiembre de 2022</b> ♥<br />
                         Tu contador interactivo en vivo está activo en el fondo de tu escritorio.
                       </p>
                       <div style={{ 
@@ -286,7 +286,7 @@ function App() {
                         color: '#7b38a6',
                         lineHeight: '1.6'
                       }}>
-                        ✨ "Cada día, cada hora y cada segundo a tu lado son lo mejor que me ha pasado." ✨
+                        "Cada día, cada hora y cada segundo a tu lado son lo mejor que me ha pasado." ♥
                       </div>
                       <button 
                         type="button" 
@@ -294,7 +294,7 @@ function App() {
                         onClick={commonProps.onClose} 
                         style={{ marginTop: '5px', width: 'auto', padding: '6px 20px' }}
                       >
-                        ♥ Cerrar con amor ♥
+                        ♥ Cerrar ♥
                       </button>
                     </div>
                   </DraggableWindow>
